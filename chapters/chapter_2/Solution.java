@@ -69,6 +69,31 @@ public class Solution {
 			}
 		}
 	}
+	
+	public static boolean hasLoop(Node head) {
+		Node slow = head;
+		Node fast = head;
+		while(fast.next != null && fast.next.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			if(slow == fast) {
+				return true;
+			}						
+		}
+		return false;			
+	}
+	
+	public static int sumList(Node head) {
+		int sum = 0;
+		int i = 0;
+		Node curr = head;
+		while(curr != null) {
+			sum += curr.data * Math.pow(10, i);
+			curr = curr.next;
+			++i;
+		}
+		return sum;
+	}
 
 	
 }
