@@ -39,6 +39,47 @@ public class Solution {
 		return 1 + (leftHeight < rightHeight ? rightHeight : leftHeight);
 	}
 	
+	public static boolean isBalanced(Node root) {
+		if(root == null) return true;
+		if(root.left == null && root.right == null ||
+		   root.left == null && root.right.right == null && root.right.left == null ||
+		   root.right == null && root.left.left == null && root.left.right == null) {
+			return true;
+		}
+		if(root.left == null || root.right == null) {
+			return false;
+		}
+		
+		return isBalanced(root.left) && isBalanced(root.right); 
+	}
 	
+	public static boolean isBSTHelper(Node root, Integer min, Integer max) {
+		if(root == null) return true;
+		if (min != null && root.data < min ||
+			max != null && root.data > max) {
+			return false;
+		}
+		return isBSTHelper(root.left, min, root.data) && isBSTHelper(root.right, root.data, max);
+	}
+	
+	public static boolean isBST(Node root) {
+		if(root == null) return true;
+		return isBSTHelper(root.left, null, root.data) && isBSTHelper(root.right, root.data, null); 
+	}
+	
+	public static int countSumsHelper(Node root, int n, int sum) {
+		if(root == null) return 0;
+		int isSum = root.data + sum == n ? 1 : 0;
+		return  isSum + 
+				countSumsHelper(root.left, n, sum + root.data) +
+				countSumsHelper(root.right, n, sum + root.data);
+	}
+	
+	public static int countSums(Node root, int n) {
+		if(root == null) return 0;
+		return countSums(root.left, n) +
+				countSumsHelper(root, n, 0) +
+				countSums(root.right, n);
+	}
 
 }
